@@ -5,6 +5,7 @@ from loguru import logger
 
 from src.core.config import settings
 from src.core.base_model import DateTimeMixin, Base
+from src.dish.model import Dish  # 这里必须引入 Dish 模型才能创建数据库表
 
 
 # 创建数据库引擎和会话工厂
