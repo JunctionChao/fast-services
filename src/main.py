@@ -5,6 +5,9 @@ from src.core.config import get_settings, Settings, settings
 from src.core.exception import register_exception_handlers
 from src.lifespan import lifespan
 from src.dish.router import router as dishes_router
+# FastAPI Users 路由引入
+from src.auth.user_manager import fastapi_users
+from src.auth.router import register_fastapi_users_routes
 
 
 app = FastAPI(
@@ -14,8 +17,13 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# 注册全局异常处理
 register_exception_handlers(app)
 
+# 注册 FastAPI-Users 路由
+register_fastapi_users_routes(app, fastapi_users)
+
+# 引入菜品路由
 app.include_router(dishes_router)
 
 

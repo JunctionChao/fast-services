@@ -7,10 +7,12 @@ from src.dish.service import DishService
 from src.dish.repository import DishRepository
 from src.dish.schema import DishCreate, DishUpdate, DishResponse
 from src.core.database import get_db
+from src.auth.user_manager import get_current_user, current_superuser
 
 
 router = APIRouter(
-    prefix="/dishes", tags=["Dishes"]
+    prefix="/dishes", tags=["Dishes"],
+    dependencies=[Depends(get_current_user)] # 添加用户依赖，登录用户才能访问
 )
 
 
@@ -81,7 +83,8 @@ async def update_dish(
 
 @router.delete(
     "/{dish_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(current_superuser)] # 仅超级用户可删除
 )
 async def delete_dish(
     dish_id: int = Path(..., description="菜品ID"),
