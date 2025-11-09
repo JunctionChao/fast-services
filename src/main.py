@@ -9,6 +9,7 @@ from src.collection.router import router as collections_router
 # FastAPI Users 路由引入
 from src.auth.user_manager import fastapi_users
 from src.auth.router import register_fastapi_users_routes
+from src.weather.router import router as weather_router
 
 
 app = FastAPI(
@@ -28,6 +29,8 @@ register_fastapi_users_routes(app, fastapi_users)
 app.include_router(dishes_router)
 # 引入收藏路由
 app.include_router(collections_router)
+# 引入天气路由
+app.include_router(weather_router)
 
 
 # 路由引入
