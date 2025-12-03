@@ -46,7 +46,7 @@ async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db
 
 
 # cookie 传输方式
-cookie_transport = CookieTransport(cookie_max_age=3600)
+cookie_transport = CookieTransport(cookie_name="auth", cookie_max_age=3600)
 
 # bearer 传输方式
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")

@@ -33,9 +33,6 @@ async def lifespan(app: FastAPI) -> AsyncIterator:
     
     # -------- 运行 --------
     yield State(auth_redis=auth_redis, cache_redis=cache_redis, http_client=http_client)
-    
-    # -------- 运行 --------
-    yield State(auth_redis=auth_redis, cache_redis=cache_redis)
 
     # -------- 关闭 --------
     await auth_redis.close()

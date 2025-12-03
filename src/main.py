@@ -3,6 +3,7 @@ from fastapi import FastAPI, Response, Depends
 
 from src.core.config import get_settings, Settings, settings
 from src.core.exception import register_exception_handlers
+from src.core.middleware import ProcessTimeMiddleware
 from src.lifespan import lifespan
 from src.dish.router import router as dishes_router
 from src.collection.router import router as collections_router
@@ -18,6 +19,9 @@ app = FastAPI(
     description="FastAPI 实践示例",
     lifespan=lifespan
 )
+
+# 注册处理时间中间件
+app.add_middleware(ProcessTimeMiddleware)
 
 # 注册全局异常处理
 register_exception_handlers(app)
@@ -56,3 +60,9 @@ def read_root(
 async def health_check(response: Response):
     response.status_code = 200
     return {"status": "ok 👍 "}
+
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
